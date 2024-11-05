@@ -1,40 +1,39 @@
+import Print from "./prints.js";
+
 function getFlages() {
   const arrOfFlages = [...process.argv]
-  // defaults
+
   const options = {
     target: "ar",
-    currunt: "en",
+    language: "en",
     text: "hello word"
   }
+
+  let bool = false;
 
   for (let ele in arrOfFlages) {
     ele = Number(ele);
     if (arrOfFlages[ele] == "-h") {
-      logHelp()
-      process.exit()
+      Print.help();
     }
     sw: switch (arrOfFlages[ele].toLocaleLowerCase()) {
       case "-t":
-        options.target = arrOfFlages[ele + 1] || "en";
+        options.target = arrOfFlages[ele + 1] || "ar";
+        bool = true;
         break sw;
       case "-l":
-        options.currunt = arrOfFlages[ele + 1] || "ar";
+        options.language = arrOfFlages[ele + 1] || "en";
+        bool = true;
         break sw;
       case "-c":
         options.text = getContant(ele, [...arrOfFlages]) || "hello word";
-        break sw;
-      default:
+        bool = true;
         break sw;
     }
-
   }
-
-  return options;
+  const obj = { options, bool }
+  return obj;
 }
-
-
-
-
 
 
 function getContant(index, arr) {
@@ -49,26 +48,9 @@ function getContant(index, arr) {
     } else {
       break;
     }
-
   }
 
   return res;
-}
-
-
-
-
-
-
-function logHelp() {
-  
-  console.log();
-  console.log("# use flages to set options".green.bold);
-  console.log("> "+"-t <lang>\tto set the target lang you want translate to".gray);
-  console.log("> "+"-l <lang>\tto set the lang you will write".gray);
-  console.log("> "+"-c <text>\tthe text you want translate".gray);
-  console.log("> "+"-h <NOTHING>\thelp".gray);
-
 }
 
 

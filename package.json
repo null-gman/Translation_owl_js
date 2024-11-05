@@ -1,9 +1,9 @@
 {
   "name": "clittranslate",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bulid" : "deno compile --allow-all --output ./bulid/owetrans.exe --allow-scripts --icon ./icon.ico --target x86_64-pc-windows-msvc main.js"
   },
   "keywords": [],
   "author": "",
