@@ -7,31 +7,40 @@ const P = {
   output: process.stdout
 };
 
-export async function Input(text) {
+const Ex = new Object()
+Ex.help = (rlObj, promt) => {
+  Print.help();
+  promt()
+}
+Ex.exit = (rlObj) => {
+  rlObj.close();
+  EndProgram();
+}
+Ex.start = (rlObj) => {
+  rlObj.close();
+  openInterface();
+}
+async function Input(text) {
   const rl = readline.createInterface(P);
   const promt = (str = text) => sendPrompt(rl, str);
 
   return new Promise((resolve) => {
     // no reject will needed .
+
     promt()
     rl.on("line", function (v) {
       v = v.trim();
-      if (v === ".exit") {
-        rl.close();
-        EndProgram();
 
-        return;
-      }
-
-      if (v === ".help") {
-        Print.help()
-        promt()
-        return;
-      }
-
-      if (v === ".start") {
-        rl.close();
-        openInterface();
+      if (v[0] === ".") {
+        let ex = geteEx(v)
+        if (Ex[ex]) {
+          Ex[ex](rl, promt);
+    
+        }
+        else {
+          console.log("no ex");
+          promt()
+        }
         return;
       }
 
@@ -43,11 +52,12 @@ export async function Input(text) {
         Print.warn(`type in ${text}`)
         promt()
       }
-
     })
   })
 
 }
+
+
 
 function sendPrompt(rdObj, text) {
   rdObj.setPrompt(`${text}: `.bold)
@@ -66,7 +76,15 @@ function EndProgram() {
 }
 
 
+function geteEx(str) {
+  let res = ""
+  for (let i = 1; i < str.length; i++) {
+    res += str[i]
+  }
+  return res;
+}
 
 
 
 export default Input;
+
