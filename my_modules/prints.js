@@ -14,6 +14,8 @@ Print.tips = () => {
   console.log("> "+`type '.start' To start from the beginning`.gray);
 }
 
+
+
 Print.help = ()=>{
   console.log("---------------------------------- HELP -------------------------------------".bgGreen);
   

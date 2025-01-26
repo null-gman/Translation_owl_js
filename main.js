@@ -1,20 +1,21 @@
 import "npm:colors"; //npm moudel to style string in console
 
-import getFlages from "./getFlages.js";
-import getTranslate from "./getTranslate.js";
-import Input from "./readline.js";
+import getFlages from "./my_modules/getFlages.js";
+import getTranslate from "./my_modules/getTranslate.js";
+import Input from "./my_modules/readline.js";
 
-import Print from "./prints.js";
+import Print from "./my_modules/prints.js";
 
 
 
-const Codes = {
+const StatusCodes = {
   0: "no internet",
-  403: "error in prams",
+  403: "error in arguments",
   200: "all good",
   52: "unknown error"
 }
 
+  
 
 async function mainThred() {
   Print.title();
@@ -31,11 +32,11 @@ async function mainThred() {
     getTextTotranslate(options)
 
   } else {
-    res = await openInterface();
+    res = await getInputsFromUser();
   }
 }
 
-export async function openInterface() {
+export async function getInputsFromUser() {
 
   const options = new Object();
   console.log();
@@ -66,7 +67,7 @@ function outputTranslate({code,res},options) {
     Print.translate(res,options)
   
   }else{
-    Print.error(`${Codes[code]}`)
+    Print.error(`${StatusCodes[code]}`)
   }
 
 }

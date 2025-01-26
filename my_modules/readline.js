@@ -1,6 +1,6 @@
 import readline from "node:readline";
 import Print from "./prints.js";
-import { openInterface } from "./main.js";
+
 
 const P = {
   input: process.stdin,
@@ -20,7 +20,7 @@ Ex.start = (rlObj) => {
   rlObj.close();
   openInterface();
 }
-async function Input(text) {
+function Input(text) {
   const rl = readline.createInterface(P);
   const promt = (str = text) => sendPrompt(rl, str);
 
