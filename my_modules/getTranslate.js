@@ -1,25 +1,44 @@
-function getTranslate({ target, language, text }) {
+const color = require("./color");
+const {fetch} = require("undici");
 
 
-  return new Promise(async (resolve, reject) => {
-    // no need to reject
+/* 
+as a refrence :
 
-    const _text = text.replace(" ", "%20")
+    const StatusCodes = {
+      0: "no internet",
+      403: "error in arguments",
+      200: "all good",
+      52: "unknown error"
+    }  
+*/
+async function translateReq({ target , lang, text }) {
 
-    const apiUrl = `https://api.mymemory.translated.net/get?q=${_text}&langpair=${language}|${target}`;
-    
-    console.log();
-    console.log("> loading...".italic.yellow);
-    console.log();
-    
+  if (!text)  text = "hello world";
+  if (!lang)  lang = "en";
+  if (!target)  target = "ar";
+  
+  
+  const res = await handelReq({ target , lang, text });
 
+  
+  printTrans({ target , lang, text } , res);
+  
+
+}
+
+function handelReq({ target , lang, text }) {
+  return new Promise(async (resolve, _) => {
+    text = text.replace(" ", "%20"); /* formating white spaces */
+    const apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${lang}|${target}`;
+    console.log("\n",color.yellow("> loading..."),"\n");
+        
     let data = new Object();
     let res;
+
     try {
       res = await fetch(apiUrl).then((v) => v.json());
-
     } catch (error) {
-
       data.code = 0;
       resolve(data);
       return;
@@ -27,35 +46,32 @@ function getTranslate({ target, language, text }) {
 
     if (res.responseStatus == "403") {
       data.code = "403";
-      resolve(data);
-      return;
+      resolve(data); return;
     } else if (res.responseStatus == "200") {
       data.code = "200";
       data.res = { translate: res.responseData.translatedText, text };
-      resolve(data);
-      return;
-
+      resolve(data); return;
     }
-
     data.code = "52";
     resolve(data);
     return;
-
-
   })
-
-
-
 }
 
-// function getTranslate({ target, lang, text }) {
-//   new Promise((resolve, reject) => {
-//     resolve ("hello word")
-//   })
 
-// }
+function printTrans({ target , lang, text }, res) {
+  
+    if (res.code === "0" ) 
+        return console.log(color.red(">> no internet"));
+    else if (res.code === "403" )
+        return console.log(color.red(">> error in arguments"));
+    else if(res.code === "52" )  
+        return console.log(color.red(">> unknown error"));
 
+    console.log(text , " -> ", res.res.translate);
+      
+}
 
-export default getTranslate;
+module.exports =  translateReq;
 
 

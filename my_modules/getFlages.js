@@ -1,57 +1,41 @@
-import Print from "./prints.js";
+/* # getFlgaes.js :
+1. get the process.argv flages like : "-name null" and put them in object key:value .
+2. example :{name:"null",... : "..."}
+3. export : the flages object
 
+*/
 function getFlages() {
-  const arrOfFlages = [...process.argv]
+  const ARGV = [...process.argv] ;
+  const ARGV_LEN = ARGV.length;
+  const FlagesObj = {};
 
-  const options = {
-    target: "ar",
-    language: "en",
-    text: "hello word"
+  let flageKey = "";
+  let flageValue = "";
+
+  for (let index = 0; index < ARGV_LEN; index++) {
+    if ( ARGV[index][0] !== '-') {
+      continue;
+    }
+    if (! ARGV[index + 1]) {
+      continue;
+    }
+    if (ARGV[index + 1][0] === '-') {
+      continue;
+    }
+
+    flageKey = String(ARGV[index]).slice(1); /*remove "-" from the flage key */
+    flageKey = flageKey.toLocaleLowerCase(); /*no case sensitivity flages */
+
+    flageValue = ARGV[index + 1];
+
+    FlagesObj[flageKey] = flageValue;
   }
 
-  let bool = false;
-
-  for (let ele in arrOfFlages) {
-    ele = Number(ele);
-    if (arrOfFlages[ele] == "-h") {
-      Print.help();
-    }
-    sw: switch (arrOfFlages[ele].toLocaleLowerCase()) {
-      case "-t":
-        options.target = arrOfFlages[ele + 1] || "ar";
-        bool = true;
-        break sw;
-      case "-l":
-        options.language = arrOfFlages[ele + 1] || "en";
-        bool = true;
-        break sw;
-      case "-c":
-        options.text = getContant(ele, [...arrOfFlages]) || "hello word";
-        bool = true;
-        break sw;
-    }
-  }
-  const obj = { options, bool }
-  return obj;
+  return FlagesObj;
 }
 
 
-function getContant(index, arr) {
-  let res = "";
-
-  // to start from first elemnt after flage
-  index++;
-
-  for (let i = index; i < arr.length; i++) {
-    if (arr[i][0] !== "-") {
-      res += i < arr.length - 1 ? `${arr[i]} ` : `${arr[i]}`;
-    } else {
-      break;
-    }
-  }
-
-  return res;
-}
 
 
-export default getFlages;
+const FLAGES_OBJ = getFlages();
+module.exports = FLAGES_OBJ;
