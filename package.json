@@ -3,9 +3,6 @@
   "version": "1.1.0",
   "main": "main.js",
   "scripts": {
-    "bulid" : "deno compile --allow-all --output ./bulid/owetrans.exe --allow-scripts --icon ./icon.ico --target x86_64-pc-windows-msvc main.js"
-  },
-  "dependencies": {
-    "colors": "^1.4.0"
+    "start": "node main.js"
   }
 }
