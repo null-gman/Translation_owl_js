@@ -2,6 +2,12 @@
 
 A simple command-line translation program using Node.js.
 
+## setup
+1. install the dependencys `npm install`
+2. to run the program `node ./main.js` or `npm start`
+
+> You can also create a `shell` script and place it in the `bin` directory or any directory included in your `PATH`.
+
 ## Usage
 
 ### Default Behavior
