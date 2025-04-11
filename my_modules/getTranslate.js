@@ -68,7 +68,19 @@ function printTrans({ target , lang, text }, res) {
     else if(res.code === "52" )  
         return console.log(color.red(">> unknown error"));
 
-    console.log(text , " -> ", res.res.translate);
+
+    /* translation 
+            from "" to ""
+            hello
+            مرحبا 
+     * 
+     *  */    
+    console.log(color.green("translation"),`from "${lang}" to "${target}"`);
+    console.log(text , "\n", res.res.translate);
+    
+
+    console.log("-----------------------------------------------------------------");
+    
       
 }
 

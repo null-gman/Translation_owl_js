@@ -13,7 +13,7 @@ const color = require("./my_modules/color.js");
 
 async function main() {
   const msg = color.green("hello to my cli translater !!")
-  console.log(msg);
+  console.log(msg,"\n");
   
   const { target , lang , text} = FLAGES_OBJ;
   if (text) 
@@ -26,7 +26,6 @@ async function main() {
 async function startConsole() {
 
   while (1) {
-    console.log(color.yellow("start"));
     
     const lang = await input("\tlanguage? ");
     const target = await input("\ttarget? ");
