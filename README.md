@@ -2,6 +2,11 @@
 
 A simple command-line translation program using Node.js.
 
+# RESTful API service provided by
+
+- [https://mymemory.translated.net/](https://mymemory.translated.net/)
+
+
 ## setup
 1. install the dependencys `npm install`
 2. to run the program `node ./main.js` or `npm start`
